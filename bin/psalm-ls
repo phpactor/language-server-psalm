@@ -26,6 +26,7 @@ $container = PhpactorContainer::fromExtensions([
     LoggingExtension::PARAM_PATH => __DIR__ .'/../psalm-ls.log',
     LoggingExtension::PARAM_ENABLED => true,
     LanguageServerExtension::PARAM_ENABLE_WORKPACE => false,
+    LanguageServerExtension::PARAM_DIAGNOSTIC_SLEEP_TIME=> false,
 ]);
 
 $handler = new StreamHandler(STDERR);

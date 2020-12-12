@@ -3,7 +3,6 @@
 namespace Phpactor\Extension\LanguageServerPsalm\DiagnosticProvider;
 
 use Amp\Promise;
-use Phpactor\Extension\LanguageServerPsalm\Model\FileToLint;
 use Phpactor\Extension\LanguageServerPsalm\Model\Linter;
 use Phpactor\LanguageServerProtocol\TextDocumentItem;
 use Phpactor\LanguageServer\Core\Diagnostics\DiagnosticsProvider;
