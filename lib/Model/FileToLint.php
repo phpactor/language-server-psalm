@@ -1,6 +1,6 @@
 <?php
 
-namespace Phpactor\Extension\LanguageServerPhpstan\Model;
+namespace Phpactor\Extension\LanguageServerPsalm\Model;
 
 class FileToLint
 {

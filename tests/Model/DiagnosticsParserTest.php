@@ -1,9 +1,9 @@
 <?php
 
-namespace Phpactor\Extension\LanguageServerPhpstan\Tests\Model;
+namespace Phpactor\Extension\LanguageServerPsalm\Tests\Model;
 
 use PHPUnit\Framework\TestCase;
-use Phpactor\Extension\LanguageServerPhpstan\Model\DiagnosticsParser;
+use Phpactor\Extension\LanguageServerPsalm\Model\DiagnosticsParser;
 use RuntimeException;
 
 class DiagnosticsParserTest extends TestCase
@@ -11,16 +11,18 @@ class DiagnosticsParserTest extends TestCase
     /**
      * @dataProvider provideParse
      */
-    public function testParse(string $phpstanJson, int $count): void
+    public function testParse(string $pslamJson, int $count): void
     {
-        self::assertCount($count, (new DiagnosticsParser())->parse($phpstanJson));
+        self::assertCount($count, (new DiagnosticsParser())->parse($pslamJson));
     }
 
     public function provideParse()
     {
         yield [
-            '{"totals":{"errors":0,"file_errors":1},"files":{"/home/daniel/www/phpactor/language-server-phpstan/test.php":{"errors":1,"messages":[{"message":"Undefined variable: $bar","line":3,"ignorable":true}]}},"errors":[]}',
-            1
+            <<<'EOT'
+[{"severity":"info","line_from":49,"line_to":49,"type":"TooManyArguments","message":"Too many arguments for Phpactor\\Extension\\LanguageServerPsalm\\Model\\PsalmConfig::__construct - expecting 1 but saw 2","file_name":"lib\/LanguageServerPhpstanExtension.php","file_path":"\/home\/daniel\/www\/phpactor\/language-server-psalm\/lib\/LanguageServerPhpstanExtension.php","snippet":"                new PsalmConfig($binPath, $container->getParameter(self::PARAM_LEVEL)),","selected_text":"new PsalmConfig($binPath, $container->getParameter(self::PARAM_LEVEL))","from":2040,"to":2110,"snippet_from":2024,"snippet_to":2111,"column_from":17,"column_to":87,"error_level":4,"shortcode":26,"link":"https:\/\/psalm.dev\/026","taint_trace":null}]
+EOT
+            , 1
         ];
     }
 

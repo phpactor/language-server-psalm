@@ -1,6 +1,6 @@
 <?php
 
-namespace Phpactor\Extension\LanguageServerPhpstan\Handler;
+namespace Phpactor\Extension\LanguageServerPsalm\Handler;
 
 use Amp\CancellationToken;
 use Amp\CancelledException;
@@ -9,9 +9,9 @@ use Amp\Promise;
 use Phpactor\LanguageServer\Event\TextDocumentSaved;
 use Phpactor\LanguageServer\Event\TextDocumentUpdated;
 use Phpactor\LanguageServer\Core\Rpc\NotificationMessage;
-use Phpactor\Extension\LanguageServerPhpstan\Model\FileToLint;
+use Phpactor\Extension\LanguageServerPsalm\Model\FileToLint;
 use Phpactor\LanguageServer\Core\Server\Transmitter\MessageTransmitter;
-use Phpactor\Extension\LanguageServerPhpstan\Model\Linter;
+use Phpactor\Extension\LanguageServerPsalm\Model\Linter;
 use Phpactor\LanguageServer\Core\Service\ServiceProvider;
 use Psr\EventDispatcher\ListenerProviderInterface;
 

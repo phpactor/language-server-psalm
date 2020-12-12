@@ -1,11 +1,11 @@
 <?php
 
-namespace Phpactor\Extension\LanguageServerPhpstan\Model\Linter;
+namespace Phpactor\Extension\LanguageServerPsalm\Model\Linter;
 
 use Amp\Promise;
 use Generator;
-use Phpactor\Extension\LanguageServerPhpstan\Model\Linter;
-use Phpactor\Extension\LanguageServerPhpstan\Model\PsalmProcess;
+use Phpactor\Extension\LanguageServerPsalm\Model\Linter;
+use Phpactor\Extension\LanguageServerPsalm\Model\PsalmProcess;
 use Phpactor\LanguageServerProtocol\Diagnostic;
 use Phpactor\TextDocument\TextDocumentUri;
 use function Safe\tempnam;

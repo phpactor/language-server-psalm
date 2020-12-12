@@ -28,16 +28,16 @@
     },
     "autoload": {
         "psr-4": {
-            "Phpactor\\Extension\\LanguageServerPhpstan\\": "lib/"
+            "Phpactor\\Extension\\LanguageServerPsalm\\": "lib/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Phpactor\\Extension\\LanguageServerPhpstan\\Tests\\": "tests/"
+            "Phpactor\\Extension\\LanguageServerPsalm\\Tests\\": "tests/"
         }
     },
     "extra": {
-        "phpactor.extension_class": "Phpactor\\Extension\\LanguageServerPhpstan\\LanguageServerPhpstanExtension",
+        "phpactor.extension_class": "Phpactor\\Extension\\LanguageServerPsalm\\LanguageServerPsalmExtension",
         "branch-alias": {
             "dev-master": "0.1.x-dev"
         }

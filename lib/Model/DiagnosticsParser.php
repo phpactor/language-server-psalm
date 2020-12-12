@@ -1,11 +1,13 @@
 <?php
 
-namespace Phpactor\Extension\LanguageServerPhpstan\Model;
+namespace Phpactor\Extension\LanguageServerPsalm\Model;
 
 use Phpactor\LanguageServerProtocol\DiagnosticSeverity;
 use Phpactor\LanguageServerProtocol\Position;
 use Phpactor\LanguageServerProtocol\Range;
 use Phpactor\LanguageServerProtocol\Diagnostic;
+use Psalm\Config;
+use Psalm\Report;
 use RuntimeException;
 
 class DiagnosticsParser
@@ -18,18 +20,16 @@ class DiagnosticsParser
         $decoded = $this->decodeJson($jsonString);
         $diagnostics = [];
 
-        foreach ($decoded['files'] ?? [] as $fileDiagnostics) {
-            foreach ($fileDiagnostics['messages'] as $message) {
-                $lineNo = (int)$message['line'] - 1;
-                $lineNo = $lineNo > 0 ? $lineNo : 0;
-
-                $diagnostics[] = Diagnostic::fromArray([
-                    'message' => $message['message'],
-                    'range' => new Range(new Position($lineNo, 1), new Position($lineNo, 100)),
-                    'severity' => DiagnosticSeverity::ERROR,
-                    'source' => 'phpstan'
-                ]);
-            }
+        foreach ($decoded as $psalmDiagnostic) {
+            $diagnostics[] = Diagnostic::fromArray([
+                'message' => $psalmDiagnostic['message'],
+                'range' => new Range(
+                    new Position($psalmDiagnostic['line_from'] - 1, $psalmDiagnostic['column_from'] - 1),
+                    new Position($psalmDiagnostic['line_to'] - 1, $psalmDiagnostic['column_to'] - 1)
+                ),
+                'severity' => $this->errorLevel($psalmDiagnostic),
+                'source' => 'psalm'
+            ]);
         }
 
         return $diagnostics;
@@ -40,15 +40,28 @@ class DiagnosticsParser
      */
     private function decodeJson(string $jsonString): array
     {
-        $decoded = json_decode($jsonString, true);
+        $decoded = json_decode($jsonString, true, JSON_THROW_ON_ERROR);
 
         if (null === $decoded) {
             throw new RuntimeException(sprintf(
-                'Could not decode expected PHPStan JSON string "%s"',
-                $jsonString
+                'Could not decode Psalm JSON output "%s": %s',
+                $jsonString,
+                json_last_error_msg(),
             ));
         }
 
         return $decoded;
+    }
+
+    private function errorLevel($psalmDiagnostic)
+    {
+        switch ($psalmDiagnostic['severity']) {
+            case Config::REPORT_ERROR:
+                return DiagnosticSeverity::ERROR;
+            case Config::REPORT_INFO:
+                return DiagnosticSeverity::WARNING;
+        }
+
+        return DiagnosticSeverity::INFORMATION;
     }
 }

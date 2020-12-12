@@ -1,13 +1,13 @@
 <?php
 
-namespace Phpactor\Extension\LanguageServerPhpstan\Model;
+namespace Phpactor\Extension\LanguageServerPsalm\Model;
 
 use Amp\Process\Process;
 use Amp\Promise;
 use Phpactor\LanguageServerProtocol\Diagnostic;
 use function Amp\ByteStream\buffer;
 use Psr\Log\LoggerInterface;
-use Phpactor\Extension\LanguageServerPhpstan\Model\PsalmConfig;
+use Phpactor\Extension\LanguageServerPsalm\Model\PsalmConfig;
 
 class PsalmProcess
 {
@@ -67,7 +67,7 @@ class PsalmProcess
 
             if ($exitCode > 1) {
                 $this->logger->error(sprintf(
-                    'Phpstan exited with code "%s": %s',
+                    'Psalm exited with code "%s": %s',
                     $exitCode,
                     $stderr
                 ));
@@ -76,7 +76,7 @@ class PsalmProcess
             }
 
             $this->logger->debug(sprintf(
-                'Phpstan completed in %s: %s in %s',
+                'Psalm completed in %s: %s in %s',
                 number_format(microtime(true) - $start, 4),
                 $process->getCommand(),
                 $process->getWorkingDirectory(),

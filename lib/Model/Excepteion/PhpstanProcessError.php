@@ -1,9 +1,9 @@
 <?php
 
-namespace Phpactor\Extension\LanguageServerPhpstan\Model\Excepteion;
+namespace Phpactor\Extension\LanguageServerPsalm\Model\Excepteion;
 
 use RuntimeException;
 
-class PhpstanProcessError extends RuntimeException
+class PsalmProcessError extends RuntimeException
 {
 }

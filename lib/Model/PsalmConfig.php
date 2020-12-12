@@ -1,6 +1,6 @@
 <?php
 
-namespace Phpactor\Extension\LanguageServerPhpstan\Model;
+namespace Phpactor\Extension\LanguageServerPsalm\Model;
 
 final class PsalmConfig
 {
@@ -9,20 +9,9 @@ final class PsalmConfig
      */
     private $phpstanBin;
 
-    /**
-     * @var int|null
-     */
-    private $level;
-
-    public function __construct(string $phpstanBin, ?int $level)
+    public function __construct(string $phpstanBin)
     {
         $this->phpstanBin = $phpstanBin;
-        $this->level = $level;
-    }
-
-    public function level(): ?int
-    {
-        return $this->level;
     }
 
     public function psalmBin(): string

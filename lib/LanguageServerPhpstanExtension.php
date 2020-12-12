@@ -1,22 +1,22 @@
 <?php
 
-namespace Phpactor\Extension\LanguageServerPhpstan;
+namespace Phpactor\Extension\LanguageServerPsalm;
 
 use Phpactor\Container\Container;
 use Phpactor\Container\ContainerBuilder;
 use Phpactor\Container\Extension;
-use Phpactor\Extension\LanguageServerPhpstan\Handler\PsalmService;
-use Phpactor\Extension\LanguageServerPhpstan\Model\Linter;
-use Phpactor\Extension\LanguageServerPhpstan\Model\Linter\PsalmLinter;
-use Phpactor\Extension\LanguageServerPhpstan\Model\PsalmConfig;
-use Phpactor\Extension\LanguageServerPhpstan\Model\PsalmProcess;
+use Phpactor\Extension\LanguageServerPsalm\Handler\PsalmService;
+use Phpactor\Extension\LanguageServerPsalm\Model\Linter;
+use Phpactor\Extension\LanguageServerPsalm\Model\Linter\PsalmLinter;
+use Phpactor\Extension\LanguageServerPsalm\Model\PsalmConfig;
+use Phpactor\Extension\LanguageServerPsalm\Model\PsalmProcess;
 use Phpactor\Extension\LanguageServer\LanguageServerExtension;
 use Phpactor\Extension\Logger\LoggingExtension;
 use Phpactor\FilePathResolverExtension\FilePathResolverExtension;
 use Phpactor\LanguageServer\Core\Server\Transmitter\MessageTransmitter;
 use Phpactor\MapResolver\Resolver;
 
-class LanguageServerPhpstanExtension implements Extension
+class LanguageServerPsalmExtension implements Extension
 {
     public const PARAM_PHPSTAN_BIN = 'language_server_phpstan.bin';
     public const PARAM_LEVEL = 'phpstan.level';

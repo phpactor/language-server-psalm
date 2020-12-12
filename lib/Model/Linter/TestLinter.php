@@ -1,10 +1,10 @@
 <?php
 
-namespace Phpactor\Extension\LanguageServerPhpstan\Model\Linter;
+namespace Phpactor\Extension\LanguageServerPsalm\Model\Linter;
 
 use Amp\Delayed;
 use Amp\Promise;
-use Phpactor\Extension\LanguageServerPhpstan\Model\Linter;
+use Phpactor\Extension\LanguageServerPsalm\Model\Linter;
 use Phpactor\LanguageServerProtocol\Diagnostic;
 
 class TestLinter implements Linter

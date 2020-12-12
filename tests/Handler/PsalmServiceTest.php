@@ -1,13 +1,13 @@
 <?php
 
-namespace Phpactor\Extension\LanguageServerPhpstan\Tests\Handler;
+namespace Phpactor\Extension\LanguageServerPsalm\Tests\Handler;
 
 use Amp\Delayed;
 use Amp\PHPUnit\AsyncTestCase;
 use Generator;
-use Phpactor\Extension\LanguageServerPhpstan\Handler\PsalmService;
-use Phpactor\Extension\LanguageServerPhpstan\Model\Linter\TestLinter;
-use Phpactor\Extension\LanguageServerPhpstan\Tests\Util\DiagnosticBuilder;
+use Phpactor\Extension\LanguageServerPsalm\Handler\PsalmService;
+use Phpactor\Extension\LanguageServerPsalm\Model\Linter\TestLinter;
+use Phpactor\Extension\LanguageServerPsalm\Tests\Util\DiagnosticBuilder;
 use Phpactor\LanguageServer\Core\Server\Transmitter\TestMessageTransmitter;
 use Phpactor\LanguageServer\Core\Service\ServiceManager;
 use Phpactor\LanguageServer\Core\Service\ServiceProviders;
@@ -25,7 +25,7 @@ class PsalmServiceTest extends AsyncTestCase
     private $tester;
 
     /**
-     * @var PhpstanService
+     * @var PsalmService
      */
     private $serviceProvider;
 
@@ -46,7 +46,7 @@ class PsalmServiceTest extends AsyncTestCase
         $this->transmitter = new TestMessageTransmitter();
         $this->serviceProvider = new PsalmService($this->transmitter, $this->createTestLinter());
         $this->serviceManager = new ServiceManager(new ServiceProviders($this->serviceProvider), new NullLogger());
-        $this->serviceManager->start('phpstan');
+        $this->serviceManager->start('psalm');
     }
 
     /**
@@ -62,7 +62,7 @@ class PsalmServiceTest extends AsyncTestCase
         $message = $this->transmitter->shift();
 
         self::assertNotNull($message);
-        $this->serviceManager->stop('phpstan');
+        $this->serviceManager->stop('psalm');
     }
 
     /**
@@ -82,7 +82,7 @@ class PsalmServiceTest extends AsyncTestCase
 
         self::assertNotNull($this->transmitter->shift(), 'has message');
 
-        $this->serviceManager->stop('phpstan');
+        $this->serviceManager->stop('psalm');
     }
 
     /**
@@ -104,7 +104,7 @@ class PsalmServiceTest extends AsyncTestCase
             $messages[] = $message;
         }
 
-        $this->serviceManager->stop('phpstan');
+        $this->serviceManager->stop('psalm');
 
         self::assertCount(2, $messages);
     }
@@ -114,7 +114,7 @@ class PsalmServiceTest extends AsyncTestCase
      */
     public function testHandleSaved(): Generator
     {
-        $saved = new TextDocumentSaved(ProtocolFactory::textDocumentIdentifier('id'));
+        $saved = new TextDocumentSaved(ProtocolFactory::versionedTextDocumentIdentifier('id'));
         $this->serviceProvider->lintSaved($saved);
 
         yield new Delayed(10);
@@ -122,7 +122,7 @@ class PsalmServiceTest extends AsyncTestCase
         $message = $this->transmitter->shift();
 
         self::assertNotNull($message);
-        $this->serviceManager->stop('phpstan');
+        $this->serviceManager->stop('psalm');
     }
 
 
