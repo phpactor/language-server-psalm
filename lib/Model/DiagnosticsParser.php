@@ -6,6 +6,7 @@ use Phpactor\LanguageServerProtocol\DiagnosticSeverity;
 use Phpactor\LanguageServerProtocol\Position;
 use Phpactor\LanguageServerProtocol\Range;
 use Phpactor\LanguageServerProtocol\Diagnostic;
+use Phpactor\TextDocument\TextDocumentUri;
 use Psalm\Config;
 use RuntimeException;
 
@@ -20,6 +21,10 @@ class DiagnosticsParser
         $diagnostics = [];
 
         foreach ($decoded as $psalmDiagnostic) {
+            if ($psalmDiagnostic['file_path'] !== $filename) {
+                continue;
+            }
+
             $diagnostics[] = Diagnostic::fromArray([
                 'message' => $psalmDiagnostic['message'],
                 'range' => new Range(

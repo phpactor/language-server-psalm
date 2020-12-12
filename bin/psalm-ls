@@ -25,7 +25,7 @@ $container = PhpactorContainer::fromExtensions([
     LoggingExtension::PARAM_LEVEL => 'debug',
     LoggingExtension::PARAM_PATH => __DIR__ .'/../psalm-ls.log',
     LoggingExtension::PARAM_ENABLED => true,
-    LanguageServerExtension::PARAM_ENABLE_WORKPACE => false,
+    LanguageServerExtension::PARAM_ENABLE_WORKPACE => true,
     LanguageServerExtension::PARAM_DIAGNOSTIC_SLEEP_TIME=> false,
 ]);
 
