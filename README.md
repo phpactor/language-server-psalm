@@ -1,12 +1,12 @@
 LanguageServerPsalm
-=====================
+===================
 
 [![Build Status](https://travis-ci.org/phpactor/language-server-psalm-extension.svg?branch=master)](https://travis-ci.org/phpactor/language-server-psalm-extension)
 
 Psalm Language Server and [Phpactor](https://github.com/phpactor/phpactor) Extension.
 
 Provides [Language
-Server](https://microsoft.github.io/language-server-protocol/specification) diagnostics from [Psalm](https://psalm.org/).
+Server](https://microsoft.github.io/language-server-protocol/specification) diagnostics from [Psalm](https://psalm.dev/).
 
 Usage
 -----
@@ -44,19 +44,6 @@ something like (`:CocConfig`):
         }
     }
 }
-```
-
-PHPStan Configuration
----------------------
-
-The extension depends on having a `psalm.neon` in your project root which
-defines your projects `level` and analysis `paths` e.g.:
-
-```
-# psalm.neon
-parameters:
-    level: 7
-    paths: [ src ]
 ```
 
 Configuration
