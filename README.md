@@ -1,12 +1,12 @@
-LanguageServerPhpstan
+LanguageServerPsalm
 =====================
 
-[![Build Status](https://travis-ci.org/phpactor/language-server-phpstan-extension.svg?branch=master)](https://travis-ci.org/phpactor/language-server-phpstan-extension)
+[![Build Status](https://travis-ci.org/phpactor/language-server-psalm-extension.svg?branch=master)](https://travis-ci.org/phpactor/language-server-psalm-extension)
 
-Phpstan Language Server and [Phpactor](https://github.com/phpactor/phpactor) Extension.
+Psalm Language Server and [Phpactor](https://github.com/phpactor/phpactor) Extension.
 
 Provides [Language
-Server](https://microsoft.github.io/language-server-protocol/specification) diagnostics from [Phpstan](https://phpstan.org/).
+Server](https://microsoft.github.io/language-server-protocol/specification) diagnostics from [Psalm](https://psalm.org/).
 
 Usage
 -----
@@ -16,7 +16,7 @@ Usage
 If you are using the [Phpactor Language Server](https://phpactor.readthedocs.io/en/master/usage/language-server.html)
 
 ```
-$ phpactor extension:install "phpactor/language-server-phpstan-extension"
+$ phpactor extension:install "phpactor/language-server-psalm-extension"
 ```
 
 ### Standalone
@@ -24,8 +24,8 @@ $ phpactor extension:install "phpactor/language-server-phpstan-extension"
 Manually install it:
 
 ```
-$ git clone git@github.com:phpactor/language-server-phpstan-extension some/path
-$ cd language-server-phpstan-extension
+$ git clone git@github.com:phpactor/language-server-psalm-extension some/path
+$ cd language-server-psalm-extension
 $ composer install
 ```
 
@@ -36,9 +36,9 @@ something like (`:CocConfig`):
 ```
 {
     "languageserver": {
-        "phpstan": {
+        "psalm": {
             "enable": true,
-            "command": "/some/path/bin/phpstan-ls",
+            "command": "/some/path/bin/psalm-ls",
             "args": ["language-server"],
             "filetypes": ["php"]
         }
@@ -49,11 +49,11 @@ something like (`:CocConfig`):
 PHPStan Configuration
 ---------------------
 
-The extension depends on having a `phpstan.neon` in your project root which
+The extension depends on having a `psalm.neon` in your project root which
 defines your projects `level` and analysis `paths` e.g.:
 
 ```
-# phpstan.neon
+# psalm.neon
 parameters:
     level: 7
     paths: [ src ]
@@ -62,5 +62,5 @@ parameters:
 Configuration
 -------------
 
-- `language_server_phpstan.bin`: Relative or absolute path to Phpstan. Default
-  is `'%project_root%/vendor/bin/phpstan'`
+- `language_server_psalm.bin`: Relative or absolute path to Psalm. Default
+  is `'%project_root%/vendor/bin/psalm'`

@@ -109,7 +109,7 @@ class PsalmService implements ServiceProvider, ListenerProviderInterface
                     [
                         'uri' => $fileToLint->uri(),
                         'version' => $fileToLint->version(),
-                        'diagnostics' => $diagnostics
+                        'diagnostics' => $diagnostics,
                     ]
                 ));
             }

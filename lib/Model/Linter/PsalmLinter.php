@@ -41,7 +41,7 @@ class PsalmLinter implements Linter
             return yield $this->process->analyse(TextDocumentUri::fromString($url)->path());
         }
 
-        $name = tempnam(sys_get_temp_dir(), 'phpstanls');
+        $name = tempnam(sys_get_temp_dir(), 'psalmls');
         file_put_contents($name, $text);
         $diagnostics = yield $this->process->analyse($name);
         unlink($name);

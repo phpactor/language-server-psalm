@@ -18,8 +18,7 @@ use Phpactor\MapResolver\Resolver;
 
 class LanguageServerPsalmExtension implements Extension
 {
-    public const PARAM_PHPSTAN_BIN = 'language_server_phpstan.bin';
-    public const PARAM_LEVEL = 'phpstan.level';
+    public const PARAM_PSALM_BIN = 'language_server_psalm.bin';
 
     /**
      * {@inheritDoc}
@@ -41,12 +40,12 @@ class LanguageServerPsalmExtension implements Extension
         });
 
         $container->register(PsalmProcess::class, function (Container $container) {
-            $binPath = $container->get(FilePathResolverExtension::SERVICE_FILE_PATH_RESOLVER)->resolve($container->getParameter(self::PARAM_PHPSTAN_BIN));
+            $binPath = $container->get(FilePathResolverExtension::SERVICE_FILE_PATH_RESOLVER)->resolve($container->getParameter(self::PARAM_PSALM_BIN));
             $root = $container->get(FilePathResolverExtension::SERVICE_FILE_PATH_RESOLVER)->resolve('%project_root%');
 
             return new PsalmProcess(
                 $root,
-                new PsalmConfig($binPath, $container->getParameter(self::PARAM_LEVEL)),
+                new PsalmConfig($binPath),
                 $container->get(LoggingExtension::SERVICE_LOGGER)
             );
         });
@@ -58,8 +57,7 @@ class LanguageServerPsalmExtension implements Extension
     public function configure(Resolver $schema)
     {
         $schema->setDefaults([
-            self::PARAM_PHPSTAN_BIN => '%project_root%/vendor/bin/phpstan',
-            self::PARAM_LEVEL => null,
+            self::PARAM_PSALM_BIN => '%project_root%/vendor/bin/psalm',
         ]);
     }
 }
