@@ -45,7 +45,7 @@
     "scripts": {
         "integrate": [
             "./vendor/bin/phpunit",
-            "./vendor/bin/psalm",
+            "./vendor/bin/psalm --show-info=true",
             "./vendor/bin/php-cs-fixer fix"
         ]
     }

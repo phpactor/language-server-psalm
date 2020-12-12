@@ -7,7 +7,6 @@ use Amp\Promise;
 use Phpactor\LanguageServerProtocol\Diagnostic;
 use function Amp\ByteStream\buffer;
 use Psr\Log\LoggerInterface;
-use Phpactor\Extension\LanguageServerPsalm\Model\PsalmConfig;
 
 class PsalmProcess
 {

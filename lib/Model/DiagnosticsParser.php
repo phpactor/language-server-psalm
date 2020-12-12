@@ -7,7 +7,6 @@ use Phpactor\LanguageServerProtocol\Position;
 use Phpactor\LanguageServerProtocol\Range;
 use Phpactor\LanguageServerProtocol\Diagnostic;
 use Psalm\Config;
-use Psalm\Report;
 use RuntimeException;
 
 class DiagnosticsParser
@@ -53,7 +52,7 @@ class DiagnosticsParser
         return $decoded;
     }
 
-    private function errorLevel($psalmDiagnostic)
+    private function errorLevel(array $psalmDiagnostic): int
     {
         switch ($psalmDiagnostic['severity']) {
             case Config::REPORT_ERROR:
