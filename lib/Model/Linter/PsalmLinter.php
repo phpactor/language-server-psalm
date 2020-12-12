@@ -8,8 +8,6 @@ use Phpactor\Extension\LanguageServerPsalm\Model\Linter;
 use Phpactor\Extension\LanguageServerPsalm\Model\PsalmProcess;
 use Phpactor\LanguageServerProtocol\Diagnostic;
 use Phpactor\TextDocument\TextDocumentUri;
-use function Safe\tempnam;
-use function Safe\file_put_contents;
 
 class PsalmLinter implements Linter
 {
@@ -37,14 +35,6 @@ class PsalmLinter implements Linter
      */
     private function doLint(string $url, ?string $text): Generator
     {
-        if (null === $text) {
-            return yield $this->process->analyse(TextDocumentUri::fromString($url)->path());
-        }
-
-        $name = tempnam(sys_get_temp_dir(), 'psalmls');
-        file_put_contents($name, $text);
-        $diagnostics = yield $this->process->analyse($name);
-        unlink($name);
-        return $diagnostics;
+        return yield $this->process->analyse(TextDocumentUri::fromString($url)->path());
     }
 }

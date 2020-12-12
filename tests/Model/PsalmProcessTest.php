@@ -11,6 +11,8 @@ use Phpactor\LanguageServerProtocol\Range;
 use Phpactor\LanguageServerProtocol\Diagnostic;
 use Psr\Log\NullLogger;
 use Phpactor\Extension\LanguageServerPsalm\Tests\IntegrationTestCase;
+use Symfony\Component\Process\Process;
+use function Amp\Promise\wait;
 
 class PsalmProcessTest extends IntegrationTestCase
 {
@@ -19,14 +21,33 @@ class PsalmProcessTest extends IntegrationTestCase
      */
     public function testLint(string $source, array $expectedDiagnostics): void
     {
+        $psalmBin = __DIR__ . '/../../vendor/bin/psalm';
         $this->workspace()->reset();
+        $this->workspace()->put(
+            'composer.json',
+            <<<'EOT'
+{
+    "name": "test/project",
+    "autoload": {
+        "psr-4": {
+            "Phpactor\\Extension\\LanguageServerPsalm\\": "/"
+        }
+    }
+}
+EOT
+        );
+        (Process::fromShellCommandline('composer install', $this->workspace()->path()))->mustRun();
+
+        (new Process([$psalmBin, '--init'], $this->workspace()->path()))->mustRun();
         $this->workspace()->put('test.php', $source);
         $linter = new PsalmProcess(
             $this->workspace()->path(),
-            new PsalmConfig(__DIR__ . '/../../vendor/bin/psalm'),
+            new PsalmConfig($psalmBin),
             new NullLogger()
         );
-        $diagnostics = \Amp\Promise\wait($linter->analyse($this->workspace()->path('test.php')));
+
+        $diagnostics = wait($linter->analyse($this->workspace()->path('test.php')));
+
         self::assertEquals($expectedDiagnostics, $diagnostics);
     }
 
@@ -43,6 +64,15 @@ class PsalmProcessTest extends IntegrationTestCase
         yield [
             '<?php $foobar = $barfoo;',
             [
+                Diagnostic::fromArray([
+                    'range' => new Range(
+                        new Position(0, 5),
+                        new Position(0, 12)
+                    ),
+                    'message' => 'Unable to determine the type that $foobar is being assigned to',
+                    'severity' => DiagnosticSeverity::ERROR,
+                    'source' => 'psalm'
+                ]),
                 Diagnostic::fromArray([
                     'range' => new Range(
                         new Position(0, 15),

@@ -48,13 +48,11 @@ class PsalmProcess
     public function analyse(string $filename): Promise
     {
         return \Amp\call(function () use ($filename) {
-            $args = [
+            $process = new Process([
                 $this->config->psalmBin(),
-                '--output-format=json',
-                $filename
-            ];
-
-            $process = new Process($args, $this->cwd);
+                '--show-info=true',
+                '--output-format=json'
+            ], $this->cwd);
 
             $start = microtime(true);
             $pid = yield $process->start();
@@ -75,13 +73,14 @@ class PsalmProcess
             }
 
             $this->logger->debug(sprintf(
-                'Psalm completed in %s: %s in %s',
+                'Psalm completed in %s: %s in %s ... checking for %s',
                 number_format(microtime(true) - $start, 4),
                 $process->getCommand(),
                 $process->getWorkingDirectory(),
+                $filename
             ));
 
-            return $this->parser->parse($stdout);
+            return $this->parser->parse($stdout, $filename);
         });
     }
 }

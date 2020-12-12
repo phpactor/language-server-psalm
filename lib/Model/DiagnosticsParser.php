@@ -14,7 +14,7 @@ class DiagnosticsParser
     /**
      * @return array<Diagnostic>
      */
-    public function parse(string $jsonString): array
+    public function parse(string $jsonString, string $filename): array
     {
         $decoded = $this->decodeJson($jsonString);
         $diagnostics = [];
