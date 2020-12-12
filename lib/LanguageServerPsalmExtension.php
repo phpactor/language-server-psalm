@@ -5,6 +5,7 @@ namespace Phpactor\Extension\LanguageServerPsalm;
 use Phpactor\Container\Container;
 use Phpactor\Container\ContainerBuilder;
 use Phpactor\Container\Extension;
+use Phpactor\Extension\LanguageServerPsalm\DiagnosticProvider\PsalmDiagnosticProvider;
 use Phpactor\Extension\LanguageServerPsalm\Handler\PsalmService;
 use Phpactor\Extension\LanguageServerPsalm\Model\Linter;
 use Phpactor\Extension\LanguageServerPsalm\Model\Linter\PsalmLinter;
@@ -25,14 +26,12 @@ class LanguageServerPsalmExtension implements Extension
      */
     public function load(ContainerBuilder $container)
     {
-        $container->register(PsalmService::class, function (Container $container) {
-            return new PsalmService(
-                $container->get(MessageTransmitter::class),
+        $container->register(PsalmDiagnosticProvider::class, function (Container $container) {
+            return new PsalmDiagnosticProvider(
                 $container->get(Linter::class)
             );
         }, [
-            LanguageServerExtension::TAG_LISTENER_PROVIDER => [],
-            LanguageServerExtension::TAG_SERVICE_PROVIDER => [],
+            LanguageServerExtension::TAG_DIAGNOSTICS_PROVIDER => [],
         ]);
 
         $container->register(Linter::class, function (Container $container) {
