@@ -1,0 +1,52 @@
+{
+    "name": "phpactor/language-server-psalm-extension",
+    "description": "Standalone Language Server and Phpactor Extension",
+    "license": "MIT",
+    "type": "phpactor-extension",
+    "minimum-stability":"dev",
+    "prefer-stable":true,
+    "authors": [
+        {
+            "name": "Daniel Leech",
+            "email": "daniel@dantleech.com"
+        }
+    ],
+
+    "require": {
+        "php": "^7.3",
+        "phpactor/container": "^1.0",
+        "phpactor/language-server-extension": "^0.5.0",
+        "amphp/process": "^1.1",
+        "thecodingmachine/safe": "^1.1",
+        "vimeo/psalm": "^4.3"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^9.1",
+        "friendsofphp/php-cs-fixer": "^2.16",
+        "phpactor/test-utils": "^1.1",
+        "amphp/phpunit-util": "^1.4"
+    },
+    "autoload": {
+        "psr-4": {
+            "Phpactor\\Extension\\LanguageServerPhpstan\\": "lib/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Phpactor\\Extension\\LanguageServerPhpstan\\Tests\\": "tests/"
+        }
+    },
+    "extra": {
+        "phpactor.extension_class": "Phpactor\\Extension\\LanguageServerPhpstan\\LanguageServerPhpstanExtension",
+        "branch-alias": {
+            "dev-master": "0.1.x-dev"
+        }
+    },
+    "scripts": {
+        "integrate": [
+            "./vendor/bin/phpunit",
+            "./vendor/bin/psalm",
+            "./vendor/bin/php-cs-fixer fix"
+        ]
+    }
+}
